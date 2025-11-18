@@ -4,15 +4,10 @@ const mongoose = require('mongoose');
 
 mongoose.connect(process.env.DATABASE);
 
-const Tour = mongoose.model(
-  'Tour',
-   {
-    name: String,
-    Time: String,
-    vehicle: String
-   },
-   "tours"
-  );
+const tourController = require("./controllers/client/Tour.controller.js")
+const homeController = require("./controllers/client/home.controller.js")
+
+
 
 const path = require('path');
 const app = express()
@@ -28,21 +23,11 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname,'public')));
 
 
-app.get('/', (req, res) => {
-  
-  res.render('client/pages/home.pug', {
-    pageTitle:"Trang chủ"
-  });
-})
+app.get('/',homeController.home)
 
-app.get('/tours', async (req, res) => {
-  const tourList = await Tour.find({});
-  res.render('client/pages/tour-list.pug', {
-    pageTitle:"Trang Danh sách tour",
-    tourList: tourList
-  });
-})
+app.get('/tours', tourController.list)
 
+ 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
