@@ -1,0 +1,8 @@
+extends ../layouts/default.pug 
+
+block main 
+  h1 #{pageTitle}
+
+  ul 
+    each item in tourList
+      li #{item.name} - #{item.Time} - #{item.vehicle}
