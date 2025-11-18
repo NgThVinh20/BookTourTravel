@@ -1,7 +1,8 @@
-const express = require('express')
+const express = require('express');
+require('dotenv').config();
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://thanhvinh:20122005@cluster0.7ogvozp.mongodb.net/TravelBookTour');
+mongoose.connect(process.env.DATABASE);
 
 const Tour = mongoose.model(
   'Tour',
@@ -16,8 +17,11 @@ const Tour = mongoose.model(
 const path = require('path');
 const app = express()
 const port = 3000
-app.set('views', path.join(__dirname,'views'));
 
+ 
+// thiết lập thư mục chứa file view
+app.set('views', path.join(__dirname,'views'));
+// thiết kaapj Pug làm view engine
 app.set('view engine', 'pug');
 
 // thiết lập thư mục public làm thư mục chứa file tĩnh 
@@ -32,7 +36,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/tours', async (req, res) => {
-
   const tourList = await Tour.find({});
   res.render('client/pages/tour-list.pug', {
     pageTitle:"Trang Danh sách tour",
