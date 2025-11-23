@@ -9,3 +9,4 @@ module.exports.Tour = mongoose.model(
    },
    "tours"
   );
+  
